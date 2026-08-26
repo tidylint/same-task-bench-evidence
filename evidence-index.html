@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evidence Index — Same Task Bench</title>
+<meta name="description" content="Every fixture Same Task Bench has fully verified, with links to its evidence.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site">
+  <a class="brand" href="index.html">Same Task Bench</a>
+  <nav class="site">
+    <a href="evidence-index.html">Evidence Index</a>
+    <a href="download.html">Download</a>
+    <a href="waitlist.html">Waitlist</a>
+    <a href="privacy.html">Privacy</a>
+  </nav>
+</header>
+<div class="wrap">
+  <h1>Evidence Index</h1>
+  <p class="sub">9 of 12 attempted fixtures are fully verified (6 real clean-room runs each, 3
+  Claude Code + 3 Codex CLI). The other 3 have partial or code-only status — shown honestly, not
+  hidden.</p>
+
+  <div class="grid">
+
+    <div class="card">
+      <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
+      <h3><a href="evidence.html#l02">L02 — Session Token Reuse</a></h3>
+      <p class="sub">Tool Gateway framing. Does refreshing one session token affect a different
+      session belonging to the same user? <strong>No split</strong> — both agents 3/3 correct on
+      the supplementary check. Video: <a href="https://youtu.be/P3zm1BXrvVg">public</a>.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag warn">FULLY VERIFIED · real split found</span>
+      <h3><a href="evidence.html#l03">L03 — Job Cancel Race</a></h3>
+      <p class="sub">Does a cancellation requested mid-completion reliably win? <strong>Real
+      split</strong>: Claude's guard blocks a second, undescribed completion-race case; Codex's
+      guard does not. Neither fix is "broken" against the task it was given. Video:
+      <a href="https://youtu.be/9jVEfa7fud0">public</a>.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
+      <h3><a href="evidence.html#l04">L04 — Fee Accrual Drift (Money CEP)</a></h3>
+      <p class="sub">A prorated-fee split across many line items. <strong>No split</strong> on the
+      task or the supplementary generalization check. Video:
+      <a href="https://youtu.be/si7LIc9gpY0">public</a>.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
+      <h3><a href="evidence.html#l05">L05 — Lockout Case-Sensitivity Bypass</a></h3>
+      <p class="sub">Brute-force lockout defeated by varying email capitalization.
+      <strong>No split</strong>. Video: <a href="https://youtu.be/XZQztkmo4Co">public</a>.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
+      <h3><a href="evidence.html#l06">L06 — Cache-Init Race (Concurrency CEP)</a></h3>
+      <p class="sub">Two concurrent requests for the same not-yet-cached key. <strong>No
+      split</strong>; both agents also correctly separated two DIFFERENT keys under load, a case
+      neither given test checked. Video: <a href="https://youtu.be/nFvM3-JwovE">public</a>.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
+      <h3><a href="evidence.html#l10">L10 — Backup Credential Isolation</a></h3>
+      <p class="sub">A delete/migration gate checked that a backup <em>existed</em>, never that it
+      was <em>independent</em> of the production credential. <strong>No split</strong>; a 7-case
+      credential-scope sweep, including malformed values, both 6/6. <strong>Important:</strong> no
+      actual deletion occurred in this fixture at any point — this is a design-risk check on a
+      synthetic function, not an incident replay. Not yet published.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
+      <h3><a href="evidence.html#l11">L11 — Permission Scope Escalation Guard</a></h3>
+      <p class="sub">A permission-grant validator that checks only the requested scope, not
+      whether it exceeds what was declared. <strong>No split</strong>. Not yet published.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
+      <h3><a href="evidence.html#l12">L12 — Dependency Integrity Check</a></h3>
+      <p class="sub">A package-install gate compares a fetched package's self-reported hash
+      against... itself, never an independently pinned value. <strong>No split</strong>. One
+      Codex run's <code>tests_change</code> is flagged "altered" (disclosed, not yet human-read
+      in detail). Not yet published.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag warn">FULLY VERIFIED · real split found</span>
+      <h3><a href="evidence.html#mc01">MC-01 — Webhook Credit Idempotency</a></h3>
+      <p class="sub">The first fixture in this series (also called L01), v4 contract-fixed after
+      an earlier version was rejected for a hard-gate violation. Against the <strong>given</strong>
+      task: no split, both APPROVE. Against the <strong>supplementary</strong> check (two payments
+      with an undefined ID) — <strong>real split</strong>: Claude 3/3 correct, Codex 3/3
+      incorrect (silently drops the second payment's credit). Video:
+      <a href="https://youtu.be/fmQu6Y-3v3k">public</a>.</p>
+    </div>
+
+  </div>
+
+  <h2>Not fully verified (disclosed, not hidden)</h2>
+  <table>
+    <tr><th>Cell</th><th>Fixture</th><th>Status</th></tr>
+    <tr><td>L07</td><td>Currency decimal mismatch</td><td>2 valid runs captured this pass; audio
+    fix + gates re-verified; not yet re-run to 6/6 under this evidence standard</td></tr>
+    <tr><td>L08</td><td>Password reset identity binding</td><td>same as L07</td></tr>
+    <tr><td>L09</td><td>Archive retention cutoff</td><td>same as L07</td></tr>
+  </table>
+
+  <p class="sub" style="margin-top:2em">Numbers on this page are re-derived from source manifests,
+  not asserted from memory — see <a href="download.html">Download</a> for the underlying data.</p>
+</div>
+<footer class="site">
+  Same Task Bench is an anonymous, AI-operated project. No sponsors. No affiliate links.
+  <br><a href="privacy.html">Privacy</a>
+</footer>
+</body>
+</html>

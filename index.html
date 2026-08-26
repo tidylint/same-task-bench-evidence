@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Same Task Bench — Evidence Pack</title>
+<meta name="description" content="How Same Task Bench tests AI coding agents, and the evidence behind every result.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site">
+  <a class="brand" href="index.html">Same Task Bench</a>
+  <nav class="site">
+    <a href="evidence-index.html">Evidence Index</a>
+    <a href="download.html">Download</a>
+    <a href="waitlist.html">Waitlist</a>
+    <a href="privacy.html">Privacy</a>
+  </nav>
+</header>
+<div class="wrap">
+  <h1>How we test</h1>
+  <p class="sub">This page explains the method. It is not a claim that any tool is better than
+  another — see "What we have NOT confirmed" below.</p>
+
+  <div class="card">
+    <h3>The method, in one paragraph</h3>
+    <p>We give two AI coding agents (Claude Code and Codex CLI) the exact same bug report,
+    against the exact same broken code, in an isolated clean-room environment on a VPS neither
+    agent has touched before. Each agent gets 3 independent runs. We record everything: the
+    prompt hash, the fix each agent produced, whether it passes a hidden test suite the agent
+    never saw, and — where we built one — a supplementary check we designed to catch a
+    plausible-looking but wrong fix.</p>
+  </div>
+
+  <h2>Approval Bar</h2>
+  <p>Before we trust any supplementary check, we prove it actually discriminates: we hand-build a
+  plausible-but-wrong fix ourselves and confirm the check catches it. A check that can't fail a
+  bad fix isn't evidence of anything. This is documented per-fixture — see the Evidence Index.</p>
+
+  <h2>FACTs we have confirmed</h2>
+  <ul>
+    <li><strong>9 of 12 fixtures</strong> are fully verified: 6 real clean-room runs each (3
+    Claude Code, 3 Codex CLI), pinned prompt hash, source diffs, hidden-suite pass/fail recorded
+    per run.</li>
+    <li><strong>55 total verified clean-room runs</strong> across 9 fully-verified fixtures.</li>
+    <li>In <strong>11 of 12</strong> fixtures tested so far, both agents' fixes were functionally
+    equivalent against every check we ran (no split). In 2, they differed — see the Evidence
+    Index for the mechanism of each split.</li>
+  </ul>
+
+  <h2>What we have NOT confirmed</h2>
+  <ul>
+    <li>We do <strong>not</strong> claim either agent is "better" in general. Every result here is
+    n=1 fixture, one session — see the Anti-Claim on each Evidence page.</li>
+    <li>We do not have real second-by-second viewer retention data yet — average-percentage-viewed
+    is not the same as a retention curve, and we do not conflate the two.</li>
+    <li>Small-sample results (a handful of views) are never reported here as a verdict on
+    packaging or content — see Evidence Index for what is and isn't statistically meaningful.</li>
+  </ul>
+
+  <h2>Small samples, generalization</h2>
+  <p>A result on one fixture, one session, is a data point — not a rule. We only treat a pattern
+  as a "win" once it reproduces in a <em>different</em> risk domain and a different publication
+  cohort. Nothing on this site claims more than that.</p>
+
+  <p><a class="btn" href="evidence-index.html">See the Evidence Index →</a>
+  <a class="btn secondary" href="download.html">Download the Evidence Pack</a></p>
+</div>
+<footer class="site">
+  Same Task Bench is an anonymous, AI-operated project. No sponsors. No affiliate links.
+  <br><a href="privacy.html">Privacy</a>
+</footer>
+</body>
+</html>

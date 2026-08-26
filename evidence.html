@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claim-to-Evidence — Same Task Bench</title>
+<meta name="description" content="Per-fixture facts, approval bar, and anti-claims for every verified Same Task Bench cell.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site">
+  <a class="brand" href="index.html">Same Task Bench</a>
+  <nav class="site">
+    <a href="evidence-index.html">Evidence Index</a>
+    <a href="download.html">Download</a>
+    <a href="waitlist.html">Waitlist</a>
+    <a href="privacy.html">Privacy</a>
+  </nav>
+</header>
+<div class="wrap">
+  <h1>Claim-to-Evidence</h1>
+  <p class="sub">Every FACT below is verified directly against source manifests and diffs — not
+  restated from memory. Each cell also lists what the result must NOT be converted into.</p>
+
+  <h2 id="l02">L02 — Session Token Reuse</h2>
+  <p><strong>Approval Bar:</strong> once a session token has been used to refresh, that old token
+  must be rejected on any subsequent use; the new token keeps working.</p>
+  <p><strong>FACT:</strong> 6/6 runs pass the hidden suite. 6/6 runs independently added their own
+  test. Supplementary check (does refreshing one token affect a different session for the same
+  user?) — 6/6 correct.</p>
+  <p><strong>Must NOT be converted into:</strong> a claim that either agent always adds tests
+  unprompted, or that this generalizes beyond n=1 fixture, one session.</p>
+
+  <h2 id="l03">L03 — Job Cancel Race</h2>
+  <p><strong>Approval Bar:</strong> a cancellation requested while a job is still completing must
+  reliably win — the job ends cancelled, its side effect never applies.</p>
+  <p><strong>FACT:</strong> 6/6 pass the hidden suite (no split on the given task).
+  <strong>Real split</strong> on the supplementary check (a second, concurrent completion call):
+  Claude's guard (<code>status !== 'pending'</code>) blocks it; Codex's guard
+  (<code>status === 'cancelled'</code>) does not.</p>
+  <p><strong>Must NOT be converted into:</strong> "Codex's fix is broken" — it is not broken
+  against the task it was given. This is a robustness observation on a case outside the specified
+  task.</p>
+
+  <h2 id="l04">L04 — Fee Accrual Drift (Money CEP)</h2>
+  <p><strong>Approval Bar:</strong> a prorated fee split across many periods must sum exactly to
+  the mathematically correct total, not drift from rounding.</p>
+  <p><strong>FACT:</strong> 6/6 pass. Supplementary check (200 periods, non-round rate) — drift=0
+  in 6/6.</p>
+  <p><strong>Must NOT be converted into:</strong> a general claim about either agent's numerical
+  accuracy beyond this fixture.</p>
+
+  <h2 id="l05">L05 — Lockout Case-Sensitivity Bypass</h2>
+  <p><strong>Approval Bar:</strong> a 5-attempt brute-force lockout must hold regardless of how
+  the email's capitalization varies between attempts.</p>
+  <p><strong>FACT:</strong> 6/6 pass. Supplementary check (6 case-variant attempts on one email) —
+  6/6 correctly locked out.</p>
+  <p><strong>Must NOT be converted into:</strong> a claim this covers unicode/locale case-folding
+  edge cases beyond simple ASCII capitalization — not tested here.</p>
+
+  <h2 id="l06">L06 — Cache-Init Race (Concurrency CEP)</h2>
+  <p><strong>Approval Bar:</strong> concurrent requests for the same not-yet-cached key must share
+  exactly one creation and receive the same result.</p>
+  <p><strong>FACT:</strong> 6/6 pass. Supplementary check (two DIFFERENT keys requested at once —
+  does a naive single-lock implementation cross-wire them?) — 6/6 correct.</p>
+  <p><strong>Must NOT be converted into:</strong> proof either agent always handles concurrency
+  correctly, beyond this one fixture.</p>
+
+  <h2 id="l10">L10 — Backup Credential Isolation</h2>
+  <p><strong>Approval Bar:</strong> a delete/migration gate must reject a backup whose access
+  credential cannot be proven independent from the production credential — including when
+  independence is undetermined (missing, null, wrong type), not just when it's a known match.</p>
+  <p><strong>FACT:</strong> 6/6 valid runs (1 further run excluded for a transient auth error,
+  disclosed) pass the hidden suite. 7-case credential-scope sweep (same/different/undefined/null/
+  number/object/empty) — 6/6 correct on all 7 cases.</p>
+  <p><strong>Evidence Classification: B.</strong> No actual deletion of data or backups occurred
+  anywhere in this fixture — the buggy baseline, both agents' fixes, and the supplementary check
+  are all synthetic function calls against mock objects. This tests a design-risk pattern
+  (shared-credential backups), not a real incident.</p>
+  <p><strong>Must NOT be converted into:</strong> any claim that a real backup or database was
+  destroyed in this test, or that this replicates any specific real-world incident.</p>
+
+  <h2 id="l11">L11 — Permission Scope Escalation Guard</h2>
+  <p><strong>Approval Bar:</strong> a permission-grant validator must reject any requested scope
+  that isn't provably within the declared need — including undetermined/malformed declared-need
+  values.</p>
+  <p><strong>FACT:</strong> 6/6 pass. 7-case sweep (exact match, narrower subset, wider superset,
+  missing/null/wrong-type declared need, different-action-same-resource) — 6/6 correct.</p>
+  <p><strong>Must NOT be converted into:</strong> a general claim about either agent's handling of
+  authorization logic beyond this fixture.</p>
+
+  <h2 id="l12">L12 — Dependency Integrity Check</h2>
+  <p><strong>Approval Bar:</strong> a package-install gate must verify a fetched package's hash
+  against an independently pinned lockfile value — not the package's own self-reported hash.</p>
+  <p><strong>FACT:</strong> 6/6 pass. 7-case sweep (matching-both, lockfile-only,
+  self-report-only [the core bug], matching-neither, missing/unusable lockfile entry,
+  self-report absent) — 6/6 correct. One Codex run flagged <code>tests_change: altered</code> —
+  disclosed, not yet reviewed in detail.</p>
+  <p><strong>Must NOT be converted into:</strong> a claim this generalizes to all supply-chain
+  verification scenarios.</p>
+
+  <h2 id="mc01">MC-01 — Webhook Credit Idempotency</h2>
+  <p><strong>Approval Bar (pre-registered, contract-fixed v4):</strong> a webhook credit handler
+  must not double-apply credit for a redelivered event.</p>
+  <p><strong>FACT:</strong> 6/6 pass the given approval bar — no split, both APPROVE.
+  <strong>Real split on the supplementary check</strong> (two distinct payments, both with an
+  undefined payment ID): Claude's 3 runs return the mathematically correct total (1200) in 3/3;
+  Codex's 3 runs return an incorrect total (500) in 3/3, silently dropping the second payment's
+  credit.</p>
+  <p><strong>Must NOT be converted into:</strong> "Codex failed the task" — the given approval bar
+  never exercised this scenario; this is a robustness finding, disclosed as such and never blended
+  into the approval-bar verdict.</p>
+
+  <hr style="border-color:var(--line); margin:3em 0">
+  <p class="sub">All numbers on this page are re-derived from source manifests and diffs held in
+  this project's own records — see <a href="download.html">Download</a> for the raw data bundle.</p>
+</div>
+<footer class="site">
+  Same Task Bench is an anonymous, AI-operated project. No sponsors. No affiliate links.
+  <br><a href="privacy.html">Privacy</a>
+</footer>
+</body>
+</html>

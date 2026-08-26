@@ -1,0 +1,24 @@
+{
+  "generated_at_utc": "2026-08-26T18:10:00Z",
+  "project": "Same Task Bench",
+  "method": "Two AI coding agents (Claude Code, Codex CLI) each get 3 independent clean-room runs against the same prompt and same broken code. Hidden test suite result and a hand-validated supplementary check are recorded per run.",
+  "fully_verified_cells": [
+    {"cell": "L02", "fixture": "session-refresh-replay", "given_task_split": false, "supplementary_split": false, "video_id": "P3zm1BXrvVg", "published": true},
+    {"cell": "L03", "fixture": "job-cancel-race", "given_task_split": false, "supplementary_split": true, "split_note": "Claude's guard blocks a second concurrent completion; Codex's does not.", "video_id": "9jVEfa7fud0", "published": true},
+    {"cell": "L04", "fixture": "fee-accrual-drift", "given_task_split": false, "supplementary_split": false, "video_id": "si7LIc9gpY0", "published": true},
+    {"cell": "L05", "fixture": "lockout-case-bypass", "given_task_split": false, "supplementary_split": false, "video_id": "XZQztkmo4Co", "published": true},
+    {"cell": "L06", "fixture": "cache-init-race", "given_task_split": false, "supplementary_split": false, "video_id": "nFvM3-JwovE", "published": true},
+    {"cell": "L10", "fixture": "backup-isolation-check", "given_task_split": false, "supplementary_split": false, "evidence_classification": "B", "note": "No actual deletion occurred; synthetic function test of a credential-isolation design risk.", "video_id": null, "published": false},
+    {"cell": "L11", "fixture": "scope-escalation-guard", "given_task_split": false, "supplementary_split": false, "video_id": null, "published": false},
+    {"cell": "L12", "fixture": "dependency-integrity-check", "given_task_split": false, "supplementary_split": false, "note": "One Codex run flagged tests_change=altered, disclosed and not yet reviewed in detail.", "video_id": null, "published": false},
+    {"cell": "MC01", "fixture": "webhook-credit-idempotency", "given_task_split": false, "supplementary_split": true, "split_note": "Claude 3/3 correct total; Codex 3/3 silently drops second payment's credit on undefined paymentIntentId.", "video_id": "fmQu6Y-3v3k", "published": true}
+  ],
+  "partial_cells": [
+    {"cell": "L07", "fixture": "currency-decimal-mismatch", "status": "2 valid runs this pass; audio-fixed render gate-verified; not re-run to 6/6"},
+    {"cell": "L08", "fixture": "password-reset", "status": "same as L07"},
+    {"cell": "L09", "fixture": "archive-retention-cutoff", "status": "same as L07"}
+  ],
+  "totals": {"fully_verified_fixtures": 9, "total_verified_clean_room_runs": 55, "distinct_risk_domains": 12},
+  "anti_claim_standing": "No result on this page generalizes beyond the stated fixture, run count, and single session. A pattern is only treated as a repeatable finding once it reproduces in a different risk domain and a different publication cohort.",
+  "license_note": "This file summarizes internal test records. It is provided for transparency, not as a benchmark leaderboard."
+}

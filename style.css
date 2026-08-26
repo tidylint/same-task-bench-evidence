@@ -1,0 +1,31 @@
+:root {
+  --bg: #0f1319; --panel: #171c24; --ink: #e8ecf1; --sub: #9aa7b5;
+  --accent: #d6b36a; --good: #7fc48a; --warn: #e08578; --line: #2a313c;
+}
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; line-height:1.6; }
+.wrap { max-width: 780px; margin: 0 auto; padding: 24px 20px 80px; }
+header.site { border-bottom: 1px solid var(--line); padding: 16px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+header.site a.brand { color:var(--accent); font-weight:800; text-decoration:none; font-size:1.1rem; }
+nav.site a { color: var(--sub); text-decoration:none; margin-left:16px; font-size:0.92rem; }
+nav.site a:hover { color: var(--ink); }
+h1 { font-size:1.7rem; margin-top:0.3em; }
+h2 { font-size:1.25rem; margin-top:2em; border-top:1px solid var(--line); padding-top:1.2em; }
+h3 { font-size:1.05rem; color:var(--accent); }
+p, li { color: var(--ink); }
+.sub { color: var(--sub); font-size:0.95rem; }
+.card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin:14px 0; }
+.tag { display:inline-block; font-size:0.75rem; padding:2px 8px; border-radius:6px; font-weight:700; letter-spacing:.02em; }
+.tag.good { background:rgba(127,196,138,.15); color:var(--good); }
+.tag.warn { background:rgba(224,133,120,.15); color:var(--warn); }
+.tag.neutral { background:rgba(154,167,181,.15); color:var(--sub); }
+table { width:100%; border-collapse: collapse; margin:12px 0; font-size:0.92rem; }
+th, td { text-align:left; padding:6px 10px; border-bottom:1px solid var(--line); }
+th { color:var(--sub); font-weight:600; }
+a { color: var(--accent); }
+.btn { display:inline-block; background:var(--accent); color:#14100a; font-weight:800; padding:10px 20px; border-radius:8px; text-decoration:none; margin:8px 8px 8px 0; }
+.btn.secondary { background:transparent; border:1px solid var(--accent); color:var(--accent); }
+footer.site { border-top:1px solid var(--line); margin-top:60px; padding:20px; text-align:center; color:var(--sub); font-size:0.85rem; }
+code { background:#0a0d12; padding:1px 5px; border-radius:4px; font-size:0.9em; }
+.grid { display:grid; grid-template-columns: 1fr; gap:12px; }
+@media (min-width: 640px) { .grid.two { grid-template-columns: 1fr 1fr; } }
