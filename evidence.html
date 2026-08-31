@@ -66,6 +66,38 @@
   <p><strong>Must NOT be converted into:</strong> proof either agent always handles concurrency
   correctly, beyond this one fixture.</p>
 
+  <h2 id="l07">L07 — Currency Decimal Mismatch (Money CEP)</h2>
+  <p><strong>Approval Bar:</strong> a checkout display function must divide by the correct number
+  of minor units for the currency shown (0, 2, or 3 decimal digits) — not always divide by 100.</p>
+  <p><strong>FACT:</strong> 6/6 pass the hidden suite (JPY case). Supplementary check (six
+  currencies with different minor-unit digits: USD, JPY, KRW, BHD, KWD, OMR) — 6/6 allCorrect.
+  Claude wrote a hand-built ISO 4217 lookup table; Codex used <code>Intl.NumberFormat</code> to
+  ask the runtime what the currency uses. Two different implementation styles, same correct
+  result on every case.</p>
+  <p><strong>Must NOT be converted into:</strong> a general claim about either agent's numerical
+  or currency-handling accuracy beyond this one fixture.</p>
+
+  <h2 id="l08">L08 — Password-Reset Identity Binding</h2>
+  <p><strong>Approval Bar:</strong> a password-reset check must verify token equality, expiry,
+  AND that the token record actually belongs to the requesting user — not just equality/expiry/
+  one-time-use, which passes even when the token was issued for a different account.</p>
+  <p><strong>FACT:</strong> 6/6 pass the hidden suite (5 assertions: cross-account request
+  blocked, same-account request still works, wrong-token rejected, expiry-boundary-plus-wrong-
+  account rejected, one-time-use retained).</p>
+  <p><strong>Must NOT be converted into:</strong> a general claim about either agent's handling of
+  identity or session-binding logic beyond this one fixture.</p>
+
+  <h2 id="l09">L09 — Archive Retention Cutoff (Data Loss CEP, second instance)</h2>
+  <p><strong>Approval Bar:</strong> a scheduled cleanup job's record-selection function must never
+  select a protected record for deletion — including when protection status can't be determined
+  (missing, null, or an unexpected value), which must be treated as protected, not as "nothing to
+  contradict, so allow it."</p>
+  <p><strong>FACT:</strong> 6/6 pass the hidden suite (protected=true kept, unprotected-and-old
+  still selected, missing-field treated as protected). 7-case supplementary sweep (true, false,
+  undefined, explicit null, string, number, empty-string) — 6/6 correct on all 7 cases.</p>
+  <p><strong>Must NOT be converted into:</strong> a claim this generalizes to all retention or
+  backup-gate logic beyond this one fixture.</p>
+
   <h2 id="l10">L10 — Backup Credential Isolation</h2>
   <p><strong>Approval Bar:</strong> a delete/migration gate must reject a backup whose access
   credential cannot be proven independent from the production credential — including when

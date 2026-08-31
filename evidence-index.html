@@ -19,9 +19,10 @@
 </header>
 <div class="wrap">
   <h1>Evidence Index</h1>
-  <p class="sub">9 of 12 attempted fixtures are fully verified (6 real clean-room runs each, 3
-  Claude Code + 3 Codex CLI). The other 3 have partial or code-only status — shown honestly, not
-  hidden.</p>
+  <p class="sub">12 of 12 attempted fixtures are fully verified (6 real clean-room runs each, 3
+  Claude Code + 3 Codex CLI, re-verified after an audio-normalization fix that required
+  re-rendering L06–L12's narration — no fixture logic or test results changed, only the TTS
+  pipeline).</p>
 
   <div class="grid">
 
@@ -67,6 +68,33 @@
 
     <div class="card">
       <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
+      <h3><a href="evidence.html#l07">L07 — Currency Decimal Mismatch (Money CEP)</a></h3>
+      <p class="sub">A checkout display function always divided by 100, wrong for zero-decimal
+      (JPY, KRW) and three-decimal (BHD, KWD, OMR) currencies. <strong>No split</strong> on the
+      task or the six-currency supplementary sweep. Video:
+      <a href="https://youtu.be/zPccbPyYrzQ">public</a>.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
+      <h3><a href="evidence.html#l08">L08 — Password-Reset Identity Binding</a></h3>
+      <p class="sub">A password-reset check verified token equality, expiry, and one-time-use —
+      but never that the token belonged to the requesting user. <strong>No split</strong>; a
+      5-assertion hidden suite including a cross-account block, both 6/6. Video:
+      <a href="https://youtu.be/TuE7Ddk4m0k">public</a>.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
+      <h3><a href="evidence.html#l09">L09 — Archive Retention Cutoff (Data Loss CEP)</a></h3>
+      <p class="sub">A scheduled cleanup job's record-selection function filtered purely on age,
+      ignoring a <code>protected</code> flag entirely. <strong>No split</strong>; a 7-case
+      protected-field sweep, including missing/null/malformed values, both 6/6. Video:
+      <a href="https://youtu.be/gu95NFAP4Wk">public</a>.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag good">FULLY VERIFIED · 6/6 runs</span>
       <h3><a href="evidence.html#l10">L10 — Backup Credential Isolation</a></h3>
       <p class="sub">A delete/migration gate checked that a backup <em>existed</em>, never that it
       was <em>independent</em> of the production credential. <strong>No split</strong>; a 7-case
@@ -103,15 +131,6 @@
     </div>
 
   </div>
-
-  <h2>Not fully verified (disclosed, not hidden)</h2>
-  <table>
-    <tr><th>Cell</th><th>Fixture</th><th>Status</th></tr>
-    <tr><td>L07</td><td>Currency decimal mismatch</td><td>2 valid runs captured this pass; audio
-    fix + gates re-verified; not yet re-run to 6/6 under this evidence standard</td></tr>
-    <tr><td>L08</td><td>Password reset identity binding</td><td>same as L07</td></tr>
-    <tr><td>L09</td><td>Archive retention cutoff</td><td>same as L07</td></tr>
-  </table>
 
   <p class="sub" style="margin-top:2em">Numbers on this page are re-derived from source manifests,
   not asserted from memory — see <a href="download.html">Download</a> for the underlying data.</p>
