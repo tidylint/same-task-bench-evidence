@@ -146,6 +146,22 @@
   gates, or that either agent reliably validates a malformed budget configuration. n=6, one
   fixture, one session.</p>
 
+  <h2 id="l14">L14 — Post-op Verification Guard</h2>
+  <p><strong>Approval Bar:</strong> a batch file-move function must refuse to report success
+  unless it has confirmed, by reading the destination directory's actual contents after the
+  moves, that the number of files present increased by exactly the number it intended to move —
+  not merely that no individual move call errored.</p>
+  <p><strong>FACT:</strong> Against the given hidden test, literally (it reads a return value):
+  1/6 pass — Claude 1 of 3 reps, Codex 0 of 3. Every failing run refuses correctly but signals it
+  by <em>throwing</em> an exception rather than returning the <code>{ moved, verified }</code>
+  report the test checks. A 5-case supplementary sweep scored a second way — did the fix ever
+  silently claim a false success, throwing included? — passes 6/6 runs, 5/5 cases, every time.
+  Both numbers are real; the literal hidden test measured a calling-convention choice (throw vs.
+  return) that the prompt never settled, not the underlying bug.</p>
+  <p><strong>Must NOT be converted into:</strong> a claim that Codex "failed" this task, or that
+  the given hidden test's 1/6 pass rate is a verdict on either agent's coding ability rather than
+  on an unstated interface contract.</p>
+
   <h2 id="mc01">MC-01 — Webhook Credit Idempotency</h2>
   <p><strong>Approval Bar (pre-registered, contract-fixed v4):</strong> a webhook credit handler
   must not double-apply credit for a redelivered event.</p>
