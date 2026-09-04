@@ -131,6 +131,21 @@
   <p><strong>Must NOT be converted into:</strong> a claim this generalizes to all supply-chain
   verification scenarios.</p>
 
+  <h2 id="l13">L13 — Retry Budget Guard</h2>
+  <p><strong>Approval Bar:</strong> a retry-orchestration gate must refuse further retries once a
+  configured maximum attempt count OR maximum elapsed-time window is reached, and require explicit
+  escalation — even if each individual error looks retryable on its own.</p>
+  <p><strong>FACT:</strong> 6/6 pass the given hidden test (attempt count at the limit). 7-case
+  supplementary sweep (not part of the given test): count axis and elapsed-time axis both 6/6
+  correct; a non-numeric <code>maxAttempts</code> value slips past 6/6 (shared blind spot, both
+  agents); a missing/null error history also fails 6/6, but by different mechanisms — Claude falls
+  back to a default budget rather than rejecting, Codex throws an unhandled <code>TypeError</code>.
+  Two Claude runs flagged <code>tests_change: altered</code> — verified by hand to be an
+  import-statement expansion only; both pre-registered assertions survive byte-identical.</p>
+  <p><strong>Must NOT be converted into:</strong> a claim this generalizes to all retry/backoff
+  gates, or that either agent reliably validates a malformed budget configuration. n=6, one
+  fixture, one session.</p>
+
   <h2 id="mc01">MC-01 — Webhook Credit Idempotency</h2>
   <p><strong>Approval Bar (pre-registered, contract-fixed v4):</strong> a webhook credit handler
   must not double-apply credit for a redelivered event.</p>
