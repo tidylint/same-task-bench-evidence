@@ -162,6 +162,23 @@
   the given hidden test's 1/6 pass rate is a verdict on either agent's coding ability rather than
   on an unstated interface contract.</p>
 
+  <h2 id="l15">L15 — Resource Cleanup Guard</h2>
+  <p><strong>Approval Bar:</strong> a function that acquires a resource and runs a piece of work
+  must release the resource whether the work succeeds or throws, and must never swallow the
+  original error.</p>
+  <p><strong>FACT:</strong> 6/6 pass the given hidden test. A 4-case supplementary sweep
+  (normal success, acquire-failure, a non-Error throw, and an independent second call on the
+  same resource made right after the first call throws) also passes 6/6 runs × 4/4 cases —
+  total agreement, no split anywhere. 5 of 6 runs write the identical textbook fix
+  (<code>acquire(); try { return work() } finally { release() }</code>); one Claude run
+  additionally guards against the release call itself failing, unprompted, prioritizing the
+  work's original error. Market-demand basis for this fixture is disclosed as weaker than
+  L13/L14's — no single named incident, only generic technical documentation of the
+  connection-leak/pool-exhaustion pattern.</p>
+  <p><strong>Must NOT be converted into:</strong> a claim this generalizes to all
+  resource/lock-cleanup code, or that the one agent's extra release-error handling reflects a
+  general behavioral difference (n=6, one fixture, one session).</p>
+
   <h2 id="mc01">MC-01 — Webhook Credit Idempotency</h2>
   <p><strong>Approval Bar (pre-registered, contract-fixed v4):</strong> a webhook credit handler
   must not double-apply credit for a redelivered event.</p>
